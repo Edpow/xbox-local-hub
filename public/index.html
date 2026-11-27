@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0a0c" />
+    <title>Xbox Local Hub</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">XLH</span>
+        <div>
+          <h1>Xbox Local Hub</h1>
+          <p>Central multiplayer de controles Bluetooth · fase 1</p>
+        </div>
+      </div>
+      <div class="chips" id="chips">
+        <span class="chip" id="chip-mode">modo —</span>
+        <span class="chip" id="chip-ws">rede —</span>
+        <span class="chip" id="chip-auth">conta —</span>
+        <span class="chip" id="chip-session">sessão —</span>
+        <span class="chip" id="chip-transport">transporte —</span>
+      </div>
+    </header>
+
+    <div id="alerts" class="alerts" aria-live="polite"></div>
+
+    <main class="layout">
+      <section class="card" id="card-setup">
+        <div class="card-head">
+          <h2><span class="step">1</span> Conta e console</h2>
+          <span class="card-hint">descoberta + autenticação</span>
+        </div>
+
+        <div id="auth-box" class="auth-box">
+          <div class="auth-line">
+            <div>
+              <strong id="auth-title">Verificando conta…</strong>
+              <p id="auth-detail" class="muted">—</p>
+            </div>
+            <button class="btn primary" id="btn-login">Entrar com Microsoft</button>
+          </div>
+          <div id="device-code" class="device-code hidden">
+            <p>Abra <a id="device-link" href="#" target="_blank" rel="noreferrer">microsoft.com/link</a> e digite:</p>
+            <div class="code-row">
+              <code id="device-code-value">--------</code>
+              <button class="btn ghost small" id="btn-copy-code">Copiar</button>
+            </div>
+            <p class="muted" id="device-code-status">Aguardando confirmação…</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn" id="btn-scan">Procurar consoles</button>
+          <span class="muted" id="scan-meta">—</span>
+        </div>
+        <div id="console-list" class="console-list">
+          <p class="muted">Nenhuma busca realizada ainda.</p>
+        </div>
+      </section>
+
+      <section class="card" id="card-session">
+        <div class="card-head">
+          <h2><span class="step">2</span> Sessão e transporte</h2>
+          <span class="card-hint">xHome / WebRTC</span>
+        </div>
+        <div id="session-info" class="kv">
+          <div><span>Estado</span><strong id="session-state">inativo</strong></div>
+          <div><span>Sessão</span><strong id="session-id">—</strong></div>
+          <div><span>Console</span><strong id="session-server">—</strong></div>
+          <div><span>Servidor de mídia</span><strong id="session-media">—</strong></div>
+        </div>
+
+        <div class="row wrap">
+          <button class="btn danger" id="btn-stop" disabled>Encerrar sessão</button>
+          <button class="btn ghost" id="btn-keepalive" disabled>Keepalive</button>
+          <button class="btn ghost" id="btn-copy-diag">Copiar diagnóstico</button>
+        </div>
+
+        <div class="options">
+          <label class="check"><input type="checkbox" id="opt-media" checked /> Negociar vídeo/áudio (não exibido)</label>
+          <label class="inline">Slots <input type="number" id="opt-slots" min="1" max="4" value="4" /></label>
+          <label class="check"><input type="checkbox" id="opt-preview" /> Prévia de vídeo (debug)</label>
+          <label class="check"><input type="checkbox" id="opt-coop" /> Modo co-op (physicality 0)</label>
+        </div>
+
+        <div class="row">
+          <button class="btn primary" id="btn-transport" disabled>Conectar transporte WebRTC</button>
+          <span class="badge" id="transport-badge">offline</span>
+        </div>
+
+        <div id="transport-info" class="kv compact">
+          <div><span>Peer</span><strong id="peer-state">—</strong></div>
+          <div><span>ICE</span><strong id="ice-state">—</strong></div>
+          <div><span>Canais</span><strong id="channel-state">—</strong></div>
+          <div><span>Handshake</span><strong id="handshake-state">—</strong></div>
+        </div>
+
+        <video id="preview" class="preview hidden" muted autoplay playsinline></video>
+        <p class="note" id="media-note">
+          A sessão Remote Play negocia vídeo por padrão. O MVP não exibe o vídeo e não faz streaming para outros
+          aparelhos; desmarcar acima é um experimento de protocolo.
+        </p>
+      </section>
+
+      <section class="card span-2" id="card-players">
+        <div class="card-head">
+          <h2><span class="step">3</span> Jogadores P1–P4</h2>
+          <span class="card-hint">controles, associação e entradas</span>
+        </div>
+        <div class="players" id="players"></div>
+        <div class="row wrap player-actions">
+          <button class="btn ghost" id="btn-claim">Reivindicar slots ativos</button>
+          <button class="btn ghost" id="btn-release">Liberar slots</button>
+          <button class="btn ghost" id="btn-test-all">Pulso de teste (todos)</button>
+          <span class="muted" id="players-note">—</span>
+        </div>
+      </section>
+
+      <section class="card span-2" id="card-diag">
+        <div class="card-head">
+          <h2><span class="step">4</span> Diagnóstico</h2>
+          <span class="card-hint">rede, latência e eventos</span>
+        </div>
+        <div class="stats" id="stats"></div>
+        <div class="row">
+          <button class="btn ghost small" id="btn-clear-logs">Limpar logs</button>
+          <button class="btn ghost small" id="btn-download-logs">Baixar JSONL</button>
+          <span class="muted" id="log-count">0 eventos</span>
+        </div>
+        <pre class="logs" id="logs" aria-live="polite"></pre>
+      </section>
+    </main>
+
+    <footer>
+      <span>Fase 1 · prova de conceito · <span id="version">0.1.0</span></span>
+      <span id="footer-mode">—</span>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

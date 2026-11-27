@@ -1,0 +1,40 @@
+{
+  "name": "xbox-local-hub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Xbox Local Hub - central de controles Bluetooth para Xbox Remote Play",
+  "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "dev": "npm run build:dashboard -- --dev && tsx watch src/server.ts --dev",
+    "mock": "npm run build:dashboard -- --dev && tsx src/server.ts --mock --dev",
+    "build": "tsc -p tsconfig.build.json && npm run build:dashboard",
+    "build:dashboard": "node scripts/build-dashboard.mjs",
+    "start": "node dist/src/server.js",
+    "start:mock": "node dist/src/server.js --mock",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "auth": "tsx src/cli.ts auth",
+    "discover": "tsx src/cli.ts discover",
+    "consoles": "tsx src/cli.ts consoles",
+    "doctor": "tsx src/cli.ts doctor"
+  },
+  "dependencies": {
+    "werift": "^0.22.0",
+    "ws": "^8.18.0",
+    "xal-node": "^1.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/ws": "^8.5.13",
+    "esbuild": "^0.25.0",
+    "playwright-core": "^1.55.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

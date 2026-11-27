@@ -1,0 +1,32 @@
+{
+  "name": "xbox-local-hub-android",
+  "version": "0.1.0",
+  "private": true,
+  "description": "App Android (React Native + Kotlin) do Xbox Local Hub",
+  "scripts": {
+    "android": "react-native run-android",
+    "start": "react-native start",
+    "build:apk": "cd android && ./gradlew assembleRelease",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-native": "0.76.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "^15.0.1",
+    "@react-native-community/cli-platform-android": "^15.0.1",
+    "@react-native/babel-preset": "0.76.5",
+    "@react-native/metro-config": "0.76.5",
+    "@react-native/typescript-config": "0.76.5",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^18.3.3",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
