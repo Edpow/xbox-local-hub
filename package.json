@@ -21,7 +21,8 @@
     "auth": "tsx src/cli.ts auth",
     "discover": "tsx src/cli.ts discover",
     "consoles": "tsx src/cli.ts consoles",
-    "doctor": "tsx src/cli.ts doctor"
+    "doctor": "tsx src/cli.ts doctor",
+    "check:privacy": "node scripts/check-privacy.mjs"
   },
   "dependencies": {
     "werift": "^0.22.0",

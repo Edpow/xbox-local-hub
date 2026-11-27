@@ -14,7 +14,7 @@ Capturas geradas durante a fase 1.
 - `xbox-real-home-skyforce-focus.png` — após dois D-Pad Right enviados pelo celular, foco em Sky Force.
 - `xbox-real-jedi-details.png` — A remoto abriu os detalhes de Jedi: Fallen Order.
 - `xbox-real-game-launched.png` — A remoto iniciou o jogo.
-- `xbox-real-p1-prompt.png` — Sky Force reconhece P1 (EdPOOW) e pede um botão.
+- `xbox-real-p1-prompt.png` — Sky Force reconhece P1 (perfil do teste) e pede um botão.
 - `xbox-real-skyforce-menu.png` — menu principal do Sky Force.
 - `xbox-real-coop-p2-attempt.png` — tentativa de P2 no co-op; o jogo não criou a segunda nave.
 

@@ -20,7 +20,7 @@ Prova em hardware real: foco em YouTube → Sky Force, causado por dois D-Pad Ri
 |---|---|
 | Descoberta SmartGlass na LAN (UDP 5050) | implementada + testes de codec |
 | Login Microsoft por device code | validado em hardware real |
-| Lista de consoles Xbox Live (`serverId`) | validado (XboxOneS `FD004670BEF12927`) |
+| Lista de consoles Xbox Live (`serverId`) | validado em hardware real (id omitido) |
 | Sessão xHome (`/v5/sessions/home/*`) | validada: `Provisioned` → SDP/ICE → WebRTC |
 | Despertar console (`Power/WakeUp` via xccs) | validado (ConnectedStandby → On) |
 | Handshake WebRTC, canais `message`/`control`/`input` | validado no Moto G200 contra o Xbox real |

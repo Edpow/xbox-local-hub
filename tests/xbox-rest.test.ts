@@ -72,7 +72,7 @@ describe('xHome session REST client', () => {
       gsToken: 'stream-token',
       fetchImpl: impl,
     })
-    const started = await client.startSession('F4001DF950A8A')
+    const started = await client.startSession('TEST-CONSOLE-01')
     expect(started.sessionId).toBe('ABC-123')
     expect(started.sessionPath).toBe('v5/sessions/home/ABC-123')
 
@@ -95,7 +95,7 @@ describe('xHome session REST client', () => {
     expect(headers.get('Authorization')).toBe('Bearer stream-token')
     expect(headers.get('X-MS-Device-Info')).toContain('Microsoft.GamingApp')
     const body = JSON.parse(String(play?.init.body)) as Record<string, unknown>
-    expect(body.serverId).toBe('F4001DF950A8A')
+    expect(body.serverId).toBe('TEST-CONSOLE-01')
     expect(body.titleId).toBe('')
     expect((body.settings as Record<string, unknown>).nanoVersion).toBe('V3;WebrtcTransport.dll')
   })
@@ -210,8 +210,8 @@ describe('Xbox Live console list', () => {
       code: 200,
       data: {
         result: [
-          { id: 'F4001DF950A8A', name: 'Sala', consoleType: 'XboxOneS', powerState: 'On' },
-          { id: 'F4001DF950A8A', name: 'Duplicado' },
+          { id: 'TEST-CONSOLE-01', name: 'Sala', consoleType: 'XboxOneS', powerState: 'On' },
+          { id: 'TEST-CONSOLE-01', name: 'Duplicado' },
           { deviceId: 'B', deviceName: 'Quarto' },
           { name: 'Sem id' },
         ],
@@ -219,7 +219,7 @@ describe('Xbox Live console list', () => {
     })
     expect(consoles).toHaveLength(2)
     expect(consoles[0]).toMatchObject({
-      id: 'F4001DF950A8A',
+      id: 'TEST-CONSOLE-01',
       name: 'Sala',
       consoleType: 'XboxOneS',
       powerState: 'On',
@@ -248,7 +248,7 @@ describe('Xbox Live console list', () => {
     const { impl, calls } = stubFetch(() =>
       jsonResponse({ status: { errorCode: 'OK' } }),
     )
-    await sendXccsCommand({ token: 'xsts', uhs: 'u' }, 'FD004670BEF12927', 'Power', 'WakeUp', [], impl)
+    await sendXccsCommand({ token: 'xsts', uhs: 'u' }, 'TEST-CONSOLE-01', 'Power', 'WakeUp', [], impl)
     const call = calls[0]
     expect(call?.url).toBe('https://xccs.xboxlive.com/commands')
     const headers = new Headers(call?.init.headers)
@@ -259,7 +259,7 @@ describe('Xbox Live console list', () => {
       destination: 'Xbox',
       type: 'Power',
       command: 'WakeUp',
-      linkedXboxId: 'FD004670BEF12927',
+      linkedXboxId: 'TEST-CONSOLE-01',
     })
     expect(typeof body.sessionId).toBe('string')
   })

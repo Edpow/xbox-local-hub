@@ -92,7 +92,7 @@ Content-Type: application/json
 
 Resposta contém `data.result[]`; cada item tem `id` (usado como `serverId`), `name`, `consoleType`, `powerState`.
 
-O `id` costuma ser algo como `F4001DF950A8A`, diferente do UUID SmartGlass.
+O `id` é um identificador do console, diferente do UUID SmartGlass.
 
 ## 6. Sessão xHome
 
@@ -119,7 +119,7 @@ Content-Type: application/json
     "sdkType": "web",
     "osName": "windows"
   },
-  "serverId": "F4001DF950A8A",
+  "serverId": "<serverId>",
   "fallbackRegionNames": []
 }
 ```
@@ -128,8 +128,8 @@ Resposta:
 
 ```json
 {
-  "sessionId": "04DBC99C-77BA-4D2E-B8D0-0B39CC16869C",
-  "sessionPath": "v5/sessions/home/04DBC99C-77BA-4D2E-B8D0-0B39CC16869C",
+  "sessionId": "<sessionId>",
+  "sessionPath": "v5/sessions/home/<sessionId>",
   "state": "Provisioning"
 }
 ```
@@ -303,7 +303,7 @@ Conclusão da fase de pesquisa: o **formato** suporta quatro; a **política do c
 
 ## 8.1. O que o teste real confirmou (27/11/2026)
 
-- Descoberta LAN: Xbox One S em `192.168.15.12`; strings SmartGlass são u16 + NUL (o parser u8 falhava no console real).
+- Descoberta LAN: Xbox One S na LAN; strings SmartGlass são u16 + NUL (o parser u8 falhava no console real).
 - WakeUp via xccs acordou o console de `ConnectedStandby`; depois o estado ficou `On`.
 - `/play` + poll → `Provisioned`; `configuration` com `serverDetails` e STUN da Microsoft.
 - SDP/ICE via REST funcionaram com o offer do Chrome/WebView Android; o answer foi aceito.

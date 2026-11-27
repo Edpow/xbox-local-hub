@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { homedir, tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { chromium, type Browser, type BrowserContext } from 'playwright-core'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
@@ -7,7 +7,7 @@ import { createApp, type RelayApp } from '../../src/relay/server.js'
 
 const chromeCandidates = [
   process.env.CHROME_PATH,
-  '/home/edgar/.local/bin/google-chrome',
+  join(homedir(), '.local/bin/google-chrome'),
   '/usr/bin/google-chrome',
   '/usr/bin/chromium',
   '/usr/bin/chromium-browser',

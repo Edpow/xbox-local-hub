@@ -14,6 +14,7 @@ public/app.js.map
 .auth.json
 auth.json
 access-token
+.privacy-denylist
 logs/
 *.jsonl
 

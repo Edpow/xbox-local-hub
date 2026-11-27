@@ -24,6 +24,7 @@ npm run typecheck
 npm run discover
 npm run auth
 npm run doctor
+npm run check:privacy      # varredura de dados pessoais antes do commit
 ```
 
 Build Android (JDK 17 + SDK 35):
@@ -72,6 +73,7 @@ tests/                     vitest + e2e
 8. **Mock não é console.** Resultados do mock vão para “software verificado”, nunca para “compatível com Xbox”.
 9. **Auth em LAN.** Fora de loopback, o relay exige token; preserve esse comportamento.
 10. **Testes antes de refatorar protocolo.** Os testes de bytes são a especificação executável.
+11. **Privacidade.** Nunca versione nome real, gamertag, e-mail pessoal, `serverId`/UUID de console ou de sessão, IPs da LAN, serial de aparelho ou caminhos com o usuário do sistema. Use placeholders (`<serverId>`, `<sessionId>`, `192.168.1.x`, `$HOME`) e tarje capturas antes do commit. Rode `npm run check:privacy`; o hook `.githooks/pre-commit` bloqueia o commit se encontrar um padrão proibido.
 
 ## 5. Onde adicionar coisas
 
@@ -90,6 +92,9 @@ tests/                     vitest + e2e
 - Logs estruturados com `logger.child('scope')`.
 - Erros de API retornam `{ error, message }` e status adequado.
 - O dashboard não deve quebrar se o relay cair; o WS reconecta.
+- Antes de commitar, rode `npm run check:privacy`. Ative o hook com `git config core.hooksPath .githooks` (uma vez por clone).
+- Termos sensíveis específicos vão em `.privacy-denylist` (gitignored), um por linha; nunca versione esse arquivo.
+- Em capturas, tarje nome, gamertag, e-mail, IDs de console/sessão e IPs antes de salvar em `docs/evidence/`.
 
 ## 7. Armadilhas conhecidas
 

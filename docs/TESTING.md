@@ -22,7 +22,7 @@ npm run typecheck
 O e2e usa `playwright-core` com um Chrome do sistema. Ele procura, nesta ordem:
 
 1. `CHROME_PATH`;
-2. `/home/edgar/.local/bin/google-chrome`;
+2. `$HOME/.local/bin/google-chrome`;
 3. `/usr/bin/google-chrome`;
 4. `/usr/bin/chromium`;
 5. `/usr/bin/chromium-browser`.

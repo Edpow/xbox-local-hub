@@ -30,7 +30,7 @@ O MVP foi implementado e executado em software e em hardware real:
 | Servidor mock | `npm run mock` | health/state/consoles/sessão OK |
 | Device code Microsoft | login real pelo usuário | concluído; tokens salvos |
 | Build/instalação Android | Gradle + ADB | APK debug instalado no Moto G200 |
-| Descoberta SmartGlass | UDP 5050 na LAN | Xbox One S encontrado em `192.168.15.12` |
+| Descoberta SmartGlass | UDP 5050 na LAN | Xbox One S encontrado na LAN |
 | Sessão + WebRTC reais | dashboard no celular | `Provisioned`, peer `connected`, handshake `ok` |
 | Entrada remota real | D-Pad/A pelo dashboard | foco mudou; jogos abriram/iniciaram |
 
@@ -92,15 +92,15 @@ A captura do dashboard durante o teste está em [`docs/evidence/dashboard-mock-4
 
 | Item | Valor |
 |---|---|
-| Celular | Moto G200 5G, Android 12, Wi-Fi `192.168.15.6` |
-| PC do relay | Linux, `192.168.15.8`, USB/ADB com o celular |
-| Console | Xbox One S, `192.168.15.12`, serverId `FD004670BEF12927` |
+| Celular | Moto G200 5G, Android 12, Wi-Fi na LAN |
+| PC do relay | Linux, USB/ADB com o celular |
+| Console | Xbox One S (serverId omitido) |
 | App | `com.xboxlocalhub` 0.1.0, build debug, instalado via ADB |
 | Transporte | WebView do app → relay via `adb reverse` → Xbox na Wi-Fi |
 
 ### O que aconteceu
 
-1. **Descoberta LAN real.** O console respondeu ao UDP 5050. O parser inicialmente retornou `name=""` e `uuid="XboxOne"`; a captura do datagrama revelou que as strings SmartGlass usam **u16 + terminador NUL**, não u8. O bug foi corrigido e um teste de regressão foi adicionado. Depois: `name="XboxOne"`, `uuid="D27B0930-54AC-1F7B-C49C-FBA19B73BEC7"`.
+1. **Descoberta LAN real.** O console respondeu ao UDP 5050. O parser inicialmente retornou `name=""` e `uuid="XboxOne"`; a captura do datagrama revelou que as strings SmartGlass usam **u16 + terminador NUL**, não u8. O bug foi corrigido e um teste de regressão foi adicionado. Depois: `name="XboxOne"`, `uuid="<omitido>"`.
 2. **Login Microsoft real.** Device code concluído pelo usuário. A lista Xbox Live retornou o console e o `serverId`.
 3. **Console em standby.** O primeiro `/play` falhou com `WaitingForServerToRegister`. O comando `Power/WakeUp` via xccs foi aceito; o console acordou (`powerState: On`) e o ping passou a responder.
 4. **Sessão real.** `POST /v5/sessions/home/play` → `Provisioned`; `configuration` retornou `serverDetails` (IP `10.0.0.1`, STUN da Microsoft) e keepalive de 300 s.
